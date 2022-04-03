@@ -259,7 +259,12 @@ dependencies {
         implementation "io.jsonwebtoken:jjwt-impl"
         implementation "io.jsonwebtoken:jjwt-jackson"
     }
-    implementation ("org.springdoc:springdoc-openapi-webmvc-core")
+
+
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.6'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-security', version: '1.6.6'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-data-rest', version: '1.6.6'
+
     implementation "org.postgresql:postgresql"
     liquibaseRuntime "org.postgresql:postgresql"
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
@@ -292,6 +297,11 @@ if (project.hasProperty("gae")) {
 task cleanResources(type: Delete) {
     delete "build/resources"
 }
+//gradle -Pprod -Papi-docs bootJar jibDockerBuild
+//#docker build -t maxiplux/livemarket.business.b2bcart .
+//#docker tag  3501cab4af42 maxiplux/livemarket.business.b2bcart:1.0.5
+//#docker tag  39d440f82330 maxiplux/livemarket.business.b2bcart:kuerbernetes
+//#docker push maxiplux/livemarket.business.b2bcart:kuerbernetes
 
 wrapper {
     gradleVersion = "7.3.1"

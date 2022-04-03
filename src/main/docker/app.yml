@@ -2,14 +2,14 @@
 version: '3.8'
 services:
   baseapi-app:
-    image: baseapi
+    image: maxiplux/io.api.base:1.0.0
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,api-docs
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://baseapi-postgresql:5432/baseapi
-      - SPRING_LIQUIBASE_URL=jdbc:postgresql://baseapi-postgresql:5432/baseapi
-      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ls-9fa22a6e3be4e2980b22745a8c0f2481c9aa6256.cvmooemm7jtj.us-east-1.rds.amazonaws.com:5432/dbbaseapi?user=postgresql&password=Ajsauj#62582#56df4g4df65sgS
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://ls-9fa22a6e3be4e2980b22745a8c0f2481c9aa6256.cvmooemm7jtj.us-east-1.rds.amazonaws.com:5432/dbbaseapi?user=postgresql&password=Ajsauj#62582#56df4g4df65sgS
+      - JHIPSTER_SLEEP=1 # gives time for other services to boot before the application
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
@@ -20,7 +20,7 @@ services:
     #   - ~/volumes/jhipster/baseapi/postgresql/:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=baseapi
-      - POSTGRES_PASSWORD=
+      - POSTGRES_PASSWORD=baseapi
       - POSTGRES_HOST_AUTH_METHOD=trust
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
