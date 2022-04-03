@@ -23,3 +23,5 @@ ENTRYPOINT ["java",  "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spri
 #docker push maxiplux/io.api.base:master .
 #docker buildx build --platform linux/amd64,linux/arm64 maxiplux/io.api.base:1.0.0 --push -t maxiplux/io.api.base:1.0.0
 #aws lightsail create-container-service --service-name api-server-demo --power micro --scale 1
+#aws lightsail push-container-image --region us-east-1 --service-name api-server  --label  api-server   --image maxiplux/io.api.base:2022-04-03--40-22
+
