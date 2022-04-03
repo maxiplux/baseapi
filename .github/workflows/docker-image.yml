@@ -4,12 +4,16 @@ on: [push] # When pushing to any branch then run this action
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-  REPO_NAME: ${{secrets.REPO_NAME}}
+  REPO_NAME: ${{secrets.REPO_NAME}}  
+  AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+  AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}} 
+
 jobs:
   push-image-to-docker-hub:  # job name
     runs-on: ubuntu-latest  # runner name : (ubuntu latest version) 
     steps:
     - uses: actions/checkout@v3 # first action : checkout source code
+    - uses: aws-actions/configure-aws-credentials@v1
     - name: docker login
       run: | # log into docker hub account
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD  
@@ -20,3 +24,6 @@ jobs:
       run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
     - name: Docker Push
       run: docker push $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
+    - name: Deploy Container
+      run: lightsail push-container-image --region us-east-1 --service-name api-server  --label  api-server   --image $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
+      
