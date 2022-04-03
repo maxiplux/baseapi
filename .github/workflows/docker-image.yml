@@ -46,7 +46,7 @@ jobs:
     - name: Deploy Container
       run: |
         aws lightsail push-container-image --region us-east-1 --service-name api-server  --label  api-server   --image $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
-        aws lightsail get-container-images --service-name aws-lightsail-app | jq --raw-output ".containerImages[0].image" > image.txt
+        aws lightsail get-container-images --service-name api-server | jq --raw-output ".containerImages[0].image" > image.txt
         echo $(cat image.txt)
         jq --arg image $(cat image.txt) '.containers.app.image = $image' lightsail-app-template.json > container.json
         echo $(cat container.json)
