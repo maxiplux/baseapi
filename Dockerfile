@@ -14,6 +14,8 @@ COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application
 ENTRYPOINT ["java",  "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.jar"]
 
 #docker build -t maxiplux/io.api.base .
+
+
 #docker tag  3501cab4af42 maxiplux/livemarket.business.b2bcart:1.0.5
 #docker tag  39d440f82330 maxiplux/livemarket.business.b2bcart:kuerbernetes
 #docker push maxiplux/livemarket.business.b2bcart:kuerbernetes
