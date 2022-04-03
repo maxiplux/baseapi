@@ -1,7 +1,6 @@
 FROM gradle:jdk11 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN gradle --version
 RUN gradle build --no-daemon -Pprod -Papi-docs bootJar
 
 FROM openjdk:11-jre-slim
