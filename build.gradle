@@ -18,9 +18,10 @@ plugins {
     id "com.gorylenko.gradle-git-properties"
     id "org.openapi.generator"
     id "org.liquibase.gradle"
-    id "org.sonarqube"
+
     id "io.spring.nohttp"
     id "com.github.andygoossens.gradle-modernizer-plugin"
+    id "org.sonarqube" version "3.3"
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
@@ -240,6 +241,14 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-envers
+    implementation group: 'org.hibernate', name: 'hibernate-envers', version: '6.0.0.Final', ext: 'pom'
+
+
     testImplementation "org.testcontainers:postgresql"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation ("org.springframework.boot:spring-boot-starter-web") {
@@ -280,6 +289,15 @@ dependencies {
     testImplementation "com.h2database:h2"
     developmentOnly "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
+
+    // https://projectlombok.org
+    compileOnly 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.4'
+
+
+    // https://mvnrepository.com/artifact/org.jeasy/easy-random
+    implementation group: 'org.jeasy', name: 'easy-random-core', version: '5.0.0'
+
 }
 
 if (project.hasProperty("gae")) {
@@ -307,6 +325,13 @@ wrapper {
     gradleVersion = "7.3.1"
 }
 
+sonarqube {
+    properties {
+        property "sonar.projectKey", "maxiplux_baseapi"
+        property "sonar.organization", "maxiplux-github"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
 
 compileJava.dependsOn processResources
 processResources.dependsOn bootBuildInfo
