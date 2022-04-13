@@ -1,4 +1,4 @@
-name: Build
+name: Build-sonar-image
 on:
   push:
     branches:
