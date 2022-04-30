@@ -1,7 +1,6 @@
 package io.api.base.repository;
 
-import io.api.base.domain.entites.Category;
-import io.api.base.domain.entites.catalogs.Ocupacion;
+import io.api.base.domain.Ocupacion;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -27,9 +26,9 @@ public interface OcupacionRepository extends PagingAndSortingRepository<Ocupacio
 //    public Page<Category> findAll(Pageable pageable);
 
     //Prevents POST /people and PATCH /people/:id
-    @Override
-    @RestResource(exported = false)
-    public Ocupacion save(Ocupacion s);
+//    @Override
+//    @RestResource(exported = false)
+//    public Ocupacion save(Ocupacion s);
 
 //    // Prevents DELETE /people/:id
 //    @Override

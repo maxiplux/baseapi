@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
+
+import liquibase.pro.packaged.A;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +71,18 @@ public class BaseapiApp {
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);
     }
+
+//    sexo N/A
+//    tipo de documento N/A
+
+
+//    grupo benefactores_grupo
+//    forma de pago  configurador_formapago
+//    cuota benefactores_cuotas
+//    tipo de benefactor configurador_tipobenefactor
+//    pais configurador_pais
+//    benefactor benefactores_benefactor
+
 
     private static void logApplicationStartup(Environment env) {
         String protocol = Optional.ofNullable(env.getProperty("server.ssl.key-store")).map(key -> "https").orElse("http");

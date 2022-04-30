@@ -1,9 +1,7 @@
 package io.api.base.components;
 
-import io.api.base.domain.entites.catalogs.Ocupacion;
+import io.api.base.domain.Ocupacion;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;

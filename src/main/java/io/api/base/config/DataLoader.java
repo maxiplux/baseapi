@@ -1,8 +1,6 @@
 package io.api.base.config;
 
-import io.api.base.domain.entites.Category;
-import io.api.base.domain.entites.catalogs.Pais;
-import io.api.base.repository.CategoryRepository;
+import io.api.base.domain.Pais;
 import io.api.base.repository.PaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -21,19 +19,12 @@ public class DataLoader implements ApplicationRunner {
 
     private EasyRandom factory;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+
 
     @Autowired
     private PaisRepository paisRepository;
 
-    private void createCategory()
-    {
-        Category category = factory.nextObject(Category.class);
 
-        this.categoryRepository.save(category);
-
-    }
 
     private void createPais()
     {
@@ -45,7 +36,7 @@ public class DataLoader implements ApplicationRunner {
 
     private void main()
     {
-        createCategory();
+        //createPais();
         //createPais();
 
     }

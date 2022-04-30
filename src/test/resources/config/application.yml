@@ -13,12 +13,31 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+
+
+
+storage:
+  location: templates
 spring:
+
+  config:
+    import: application-email.properties,application-assets.properties
+  freemarker:
+    cache: false
+    template-loader-path: file:src/main/resources/templates/
+
+  quartz:
+    job-store-type: jdbc
+    jdbc.initialize-schema: always
+  sql:
+    init:
+      schema-locations: classpath:db/quartz.sql
+
   application:
     name: baseapi
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:mem:baseapi;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:baseapi;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     name:
     username:
     password:
@@ -28,8 +47,9 @@ spring:
     serialization:
       write-durations-as-timestamps: false
   jpa:
-    database-platform: tech.jhipster.domain.util.FixedH2Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
     open-in-view: false
+
     hibernate:
       ddl-auto: none
       naming:
@@ -41,9 +61,12 @@ spring:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
-      hibernate.hbm2ddl.auto: validate
+      hibernate.hbm2ddl.auto: create-drop
       hibernate.jdbc.time_zone: UTC
       hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.show_sql: true
+      hibernate.format_sql: true
+
   liquibase:
     contexts: test
   mail:

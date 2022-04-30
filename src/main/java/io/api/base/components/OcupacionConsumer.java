@@ -1,6 +1,6 @@
 package io.api.base.components;
 
-import io.api.base.domain.entites.catalogs.Ocupacion;
+import io.api.base.domain.Ocupacion;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

@@ -1,11 +1,9 @@
 package io.api.base.repository;
 
-import io.api.base.domain.entites.Benefactor;
-import io.api.base.domain.entites.Category;
+import io.api.base.domain.Benefactor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

@@ -1,7 +1,6 @@
 package io.api.base.repository;
 
-import io.api.base.domain.entites.Category;
-import io.api.base.domain.entites.catalogs.Pais;
+import io.api.base.domain.Pais;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -19,7 +18,7 @@ public interface PaisRepository extends PagingAndSortingRepository<Pais,Long> {
     // Prevents GET /people/:id
 
     @RestResource(exported = true)
-    public Category findById(String id);
+    public Pais findById(String id);
 
     // Prevents GET /people
 //    @Override
@@ -27,9 +26,9 @@ public interface PaisRepository extends PagingAndSortingRepository<Pais,Long> {
 //    public Page<Category> findAll(Pageable pageable);
 
     //Prevents POST /people and PATCH /people/:id
-    @Override
-    @RestResource(exported = false)
-    public Pais save(Pais s);
+//    @Override
+//    @RestResource(exported = false)
+//    public Pais save(Pais s);
 
 //    // Prevents DELETE /people/:id
 //    @Override
