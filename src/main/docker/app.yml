@@ -2,19 +2,28 @@
 version: '3.8'
 services:
   baseapi-app:
-    image: maxiplux/io.api.base:1.0.0
+    image: maxiplux/io.api.base:2022-05-01--47-59
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
-      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - SPRING_PROFILES_ACTIVE=dev,api-docs,quartz
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ls-9fa22a6e3be4e2980b22745a8c0f2481c9aa6256.cvmooemm7jtj.us-east-1.rds.amazonaws.com:5432/dbbaseapi?user=postgresql&password=Ajsauj#62582#56df4g4df65sgS
-      - SPRING_LIQUIBASE_URL=jdbc:postgresql://ls-9fa22a6e3be4e2980b22745a8c0f2481c9aa6256.cvmooemm7jtj.us-east-1.rds.amazonaws.com:5432/dbbaseapi?user=postgresql&password=Ajsauj#62582#56df4g4df65sgS
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DB_HOST=db
+      - DB_PORT =5432
+      - DB_USERNAME=baseapi
+      - DB_NAME =postgres
+      - DB_PASSWORD=baseapi
+
       - JHIPSTER_SLEEP=1 # gives time for other services to boot before the application
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
       - 127.0.0.1:8080:8080
-  baseapi-postgresql:
+    depends_on:
+      - db
+      - redis
+  db:
     image: postgres:14.2
     # volumes:
     #   - ~/volumes/jhipster/baseapi/postgresql/:/var/lib/postgresql/data/
@@ -26,3 +35,16 @@ services:
     # remove the "127.0.0.1:" prefix
     ports:
       - 127.0.0.1:5432:5432
+  redis:
+    image: redis:6.2.6-alpine
+    platform: linux/amd64
+    restart: always
+    ports:
+      - '6379:6379'
+    #command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes:
+      - cache:/data
+
+volumes:
+  cache:
+    driver: local

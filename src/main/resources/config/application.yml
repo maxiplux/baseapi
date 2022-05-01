@@ -29,8 +29,8 @@ envers:
 
 spring:
   redis:
-    host: localhost
-    port: 6379
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
     #password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
 
 
