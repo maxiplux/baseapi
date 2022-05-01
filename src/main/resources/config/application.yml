@@ -232,13 +232,6 @@ jhipster:
     license: unlicensed
     license-url:
   security:
-    jwt:
-      # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-      base64-secret: ZTVmNmU4NTQ4MTc1OTczODk3MjE2MzEyZjYwMWUyNGJhY2QwM2U4M2FjNTA3MTc4ZGU2ZWZkZmU2OTFlMGU4YzI2MDBmZWU5MjQ1YmYwYjVjYTQwN2NkMzY0N2I5ODE5ZGQ2NTk3ZjJiN2I2Zjk3NzQ4ZDUyYjg1Mjc2YTU0Y2U=
-      # Token is valid 24 hours
-      token-validity-in-seconds: 86400
-      token-validity-in-seconds-for-remember-me: 2592000
-
     content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
 # ===================================================================
 # Application specific properties

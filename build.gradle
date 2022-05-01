@@ -78,6 +78,7 @@ eclipse {
             java {
                 srcDirs += ["build/generated/sources/annotationProcessor/java/main"]
             }
+
         }
     }
 }

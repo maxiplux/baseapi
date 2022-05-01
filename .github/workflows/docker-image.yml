@@ -19,23 +19,6 @@ jobs:
     - name: docker login
       run: | # log into docker hub account
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-
-    - name: Install everything
-      run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo apt-get install -y jq unzip
-          sudo ./aws/install || true
-          aws --version
-          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
-          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
-          sudo chmod +x /usr/local/bin/lightsailctl
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-          aws-region: us-east-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     - name: Get current date # get the date of the build
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
@@ -43,8 +26,3 @@ jobs:
       run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
     - name: Docker Push
       run: docker push $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
-    - name: Deploy Container
-      run: |
-        aws lightsail push-container-image --region us-east-1 --service-name api-server  --label  api-server   --image $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
-        aws lightsail create-container-service-deployment --service-name api-server --containers "{\"api-server\":{\"image\":\"$DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}\",\"ports\":{\"8080\":\"HTTP\"},\"environment\":{\"JHIPSTER_SLEEP\":\"10\",\"MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED\":\"false\",\"SPRING_LIQUIBASE_URL\":\"jdbc:postgresql://ls-9fa22a6e3be4e2980b22745a8c0f2481c9aa6256.cvmooemm7jtj.us-east-1.rds.amazonaws.com:5432/dbbaseapi?user=postgresql&password=Ajsauj#62582#56df4g4df65sgS\",\"_JAVA_OPTIONS\":\"-Xmx512m -Xms256m\",\"JHIPSTER_SLEEP\":\"10\",\"SPRING_PROFILES_ACTIVE\":\"prod,api-docs\",\"SPRING_DATASOURCE_URL\":\"jdbc:postgresql://ls-9fa22a6e3be4e2980b22745a8c0f2481c9aa6256.cvmooemm7jtj.us-east-1.rds.amazonaws.com:5432/dbbaseapi?user=postgresql&password=Ajsauj#62582#56df4g4df65sgS\"}}}" --public-endpoint "{\"containerName\":\"api-server\",\"containerPort\":8080,\"healthCheck\":{\"path\":\"/\"}}"
-
