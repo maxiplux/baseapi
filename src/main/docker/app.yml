@@ -12,7 +12,7 @@ services:
       - DB_HOST=db
       - DB_PORT=5432
       - DB_USERNAME=baseapi
-      - DB_NAME =postgres
+      - DB_NAME=postgres
       - DB_PASSWORD=baseapi
 
       - JHIPSTER_SLEEP=1 # gives time for other services to boot before the application
