@@ -2,7 +2,7 @@
 version: '3.8'
 services:
   baseapi-app:
-    image: maxiplux/io.api.base:2022-05-01--47-59
+    image: maxiplux/io.api.base:2022-05-01--12-15
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev,api-docs,quartz
@@ -10,7 +10,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - DB_HOST=db
-      - DB_PORT =5432
+      - DB_PORT=5432
       - DB_USERNAME=baseapi
       - DB_NAME =postgres
       - DB_PASSWORD=baseapi
