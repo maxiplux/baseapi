@@ -1,6 +1,10 @@
 package io.api.base.config;
 
+import io.api.base.domain.Departamento;
+import io.api.base.domain.Municipio;
 import io.api.base.domain.Pais;
+import io.api.base.repository.DepartamentoRepository;
+import io.api.base.repository.MunicipioRepository;
 import io.api.base.repository.PaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -21,23 +25,39 @@ public class DataLoader implements ApplicationRunner {
 
 
 
+
+
     @Autowired
     private PaisRepository paisRepository;
 
 
 
-    private void createPais()
-    {
-        Pais pais = factory.nextObject(Pais.class);
+    @Autowired
+    private DepartamentoRepository departamentoRepository;
 
-        this.paisRepository.save(pais);
+    @Autowired
+    private MunicipioRepository municipioRepository;
 
-    }
 
     private void main()
     {
-        //createPais();
-        //createPais();
+        if (this.municipioRepository.count()==0)
+        {
+            Pais pais =  Pais.builder().id(1L).build();
+            pais.setActivo(true);
+            pais.setNombre("Colombia");
+            pais=this.paisRepository.save(pais);
+
+            Departamento departamento=Departamento.builder().pais(pais).build();
+            departamento.setNombre("Valle del cauca");
+            departamento.setActivo(true);
+            departamento=this.departamentoRepository.save(departamento);
+            Municipio municipio=Municipio.builder().departamento(departamento).build();
+            municipio.setNombre("Palmira");
+            this.municipioRepository.save(municipio);
+        }
+
+
 
     }
 

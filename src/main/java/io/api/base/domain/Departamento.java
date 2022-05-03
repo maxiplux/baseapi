@@ -7,13 +7,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "CONFIG_DEPARTAMENTO")
 @EqualsAndHashCode(callSuper=false)
+@Builder
 public class Departamento extends Catalog implements Serializable {
     @Id
     @SequenceGenerator(name="departamento_seq",
