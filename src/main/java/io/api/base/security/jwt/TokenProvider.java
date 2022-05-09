@@ -1,6 +1,7 @@
 package io.api.base.security.jwt;
 
 import io.api.base.management.SecurityMetersService;
+import io.api.base.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -11,6 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +24,9 @@ import tech.jhipster.config.JHipsterProperties;
 
 @Component
 public class TokenProvider {
+
+    @Autowired
+    private   UserRepository userRepository;
 
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
@@ -73,10 +78,20 @@ public class TokenProvider {
             validity = new Date(now + this.tokenValidityInMilliseconds);
         }
 
+        Optional<io.api.base.domain.User>  optionalUser= this.userRepository.findOneByLogin(authentication.getName());
+        Map<String,String> extraClaims=new HashMap<>();
+        if (optionalUser.isPresent())
+        {
+            extraClaims.put("firtsName",optionalUser.get().getFirstName());
+            extraClaims.put("lastName",optionalUser.get().getLastName());
+            extraClaims.put("email",optionalUser.get().getEmail());
+        }
+
         return Jwts
             .builder()
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
+            .claim("extras",extraClaims)
             .signWith(key, SignatureAlgorithm.HS512)
             .setExpiration(validity)
             .compact();

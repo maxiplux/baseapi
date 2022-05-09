@@ -11,6 +11,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @RepositoryRestResource(collectionResourceRel = "municipios", path = "municipios")
+//https://www.amitph.com/spring-data-rest-projections-and-excerpts/
 public interface MunicipioRepository extends PagingAndSortingRepository<Municipio,Long> {
     @Override
     @RestResource(exported = false)

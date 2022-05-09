@@ -2,6 +2,7 @@ package io.api.base.domain;
 
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,6 +27,7 @@ public class Municipio extends Catalog implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "departamento_id")
+    //@RestResource(path = "departamentos", rel="departamentos")
     private  Departamento departamento;
 
 
