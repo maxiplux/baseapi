@@ -17,6 +17,7 @@ public interface StorageService {
     Path load(String filename);
 
     Optional<String> saveImage(String filename, String base64Content);
+
     Optional<String> saveFile(String filename, String base64Content);
 
     Resource loadAsResource(String filename);

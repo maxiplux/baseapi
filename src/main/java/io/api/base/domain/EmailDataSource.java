@@ -16,11 +16,11 @@ import javax.persistence.*;
 public class EmailDataSource {
 
     @Id
-    @SequenceGenerator(name="batch_email_data_source_seq",  sequenceName="batch_email_data_source_seq",       allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,        generator="batch_email_data_source_seq")
+    @SequenceGenerator(name = "batch_email_data_source_seq", sequenceName = "batch_email_data_source_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "batch_email_data_source_seq")
 
     private Long id;
-    @Column(unique=true)
+    @Column(unique = true)
 
     private String name;
     private String query;

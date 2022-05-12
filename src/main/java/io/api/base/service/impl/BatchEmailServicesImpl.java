@@ -22,12 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class BatchEmailServicesImpl implements BatchEmailServices {
-
 
 
     @Autowired
@@ -50,20 +48,17 @@ public class BatchEmailServicesImpl implements BatchEmailServices {
     private StorageService storageService;
 
 
-
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = CronException.class)
     public BatchEmail createEmailBatch(BatchEmailDto batchEmailDto) {
 
-        BatchEmail batchEmail= batchEmailMapper.batchEmailDtoToBatchEmail(batchEmailDto);
+        BatchEmail batchEmail = batchEmailMapper.batchEmailDtoToBatchEmail(batchEmailDto);
         //todo clean  rename previous template name
 
-        if (batchEmailDto.getTemplate()!=null)
-        {
+        if (batchEmailDto.getTemplate() != null) {
 
-            Optional<String> optionalTemplate=this.storageService.saveFile(UUID.randomUUID().toString()+".ftlh",batchEmailDto.getTemplate());
-            if(optionalTemplate.isPresent())
-            {
+            Optional<String> optionalTemplate = this.storageService.saveFile(UUID.randomUUID() + ".ftlh", batchEmailDto.getTemplate());
+            if (optionalTemplate.isPresent()) {
                 batchEmail.setTemplatePath(optionalTemplate.get());
             }
 
@@ -81,24 +76,22 @@ public class BatchEmailServicesImpl implements BatchEmailServices {
 //
 //
 //        }
-        batchEmail.setEmailDataSource(this.emailDataSourceRepository.findById(batchEmailDto.getEmailDataSourceId()).orElseThrow(()-> new EntityFoundException("Invalid Datasource Id")));
-        batchEmail.setEmailType(this.emailTypeRepository.findById(batchEmailDto.getEmailTypeId()).orElseThrow(()-> new EntityFoundException("Invalid Email Type Id")));
-        batchEmail=this.batchEmailRepository.save(batchEmail);
+        batchEmail.setEmailDataSource(this.emailDataSourceRepository.findById(batchEmailDto.getEmailDataSourceId()).orElseThrow(() -> new EntityFoundException("Invalid Datasource Id")));
+        batchEmail.setEmailType(this.emailTypeRepository.findById(batchEmailDto.getEmailTypeId()).orElseThrow(() -> new EntityFoundException("Invalid Email Type Id")));
+        batchEmail = this.batchEmailRepository.save(batchEmail);
         try {
-            String cronExpression= Utility.buildCron(batchEmail.getCronDate(),batchEmail.getCronTime(),batchEmail.getEmailType().getName());
-            if (Utility.isValidCronExpression(cronExpression))
-            {
+            String cronExpression = Utility.buildCron(batchEmail.getCronDate(), batchEmail.getCronTime(), batchEmail.getEmailType().getName());
+            if (Utility.isValidCronExpression(cronExpression)) {
                 this.jobServices.scheduleJob(batchEmail.getEmailName(),
-                        cronExpression
+                    cronExpression
                 );
-            }
-            else {
-                throw  new CronException("Fail in Schedule Job");
+            } else {
+                throw new CronException("Fail in Schedule Job");
             }
 
         } catch (SchedulerException e) {
             log.error("createEmailBatch -> SchedulerException {}", e.getMessage());
-            throw  new CronException("Fail in Schedule Job");
+            throw new CronException("Fail in Schedule Job");
         }
 
 
@@ -110,18 +103,16 @@ public class BatchEmailServicesImpl implements BatchEmailServices {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = CronException.class)
     public BatchEmail updateEmailBatch(Long Id, BatchEmailDto batchEmailDto) {
 
-        BatchEmail batchEmail= this.batchEmailRepository.findById(Id).orElseThrow(()-> new EntityFoundException("Invalid BatchEmail Id"));
-        String oldCronName=batchEmail.getEmailName();
+        BatchEmail batchEmail = this.batchEmailRepository.findById(Id).orElseThrow(() -> new EntityFoundException("Invalid BatchEmail Id"));
+        String oldCronName = batchEmail.getEmailName();
 
-        this.batchEmailMapper.updateBatchEmailFromBatchEmailDto(batchEmailDto,batchEmail);
+        this.batchEmailMapper.updateBatchEmailFromBatchEmailDto(batchEmailDto, batchEmail);
 
 
-        if (batchEmailDto.getTemplate()!=null)
-        {
+        if (batchEmailDto.getTemplate() != null) {
 
-            Optional<String> optionalTemplate=this.storageService.saveFile(UUID.randomUUID().toString()+".ftlh",batchEmailDto.getTemplate());
-            if(optionalTemplate.isPresent())
-            {
+            Optional<String> optionalTemplate = this.storageService.saveFile(UUID.randomUUID() + ".ftlh", batchEmailDto.getTemplate());
+            if (optionalTemplate.isPresent()) {
                 batchEmail.setTemplatePath(optionalTemplate.get());
             }
 
@@ -139,25 +130,23 @@ public class BatchEmailServicesImpl implements BatchEmailServices {
 //
 //
 //        }
-        batchEmail.setEmailDataSource(this.emailDataSourceRepository.findById(batchEmailDto.getEmailDataSourceId()).orElseThrow(()-> new EntityFoundException("Invalid Datasource Id")));
-        batchEmail.setEmailType(this.emailTypeRepository.findById(batchEmailDto.getEmailTypeId()).orElseThrow(()-> new EntityFoundException("Invalid Email Type Id")));
-        batchEmail=this.batchEmailRepository.save(batchEmail);
+        batchEmail.setEmailDataSource(this.emailDataSourceRepository.findById(batchEmailDto.getEmailDataSourceId()).orElseThrow(() -> new EntityFoundException("Invalid Datasource Id")));
+        batchEmail.setEmailType(this.emailTypeRepository.findById(batchEmailDto.getEmailTypeId()).orElseThrow(() -> new EntityFoundException("Invalid Email Type Id")));
+        batchEmail = this.batchEmailRepository.save(batchEmail);
         try {
-            String cronExpression=Utility.buildCron(batchEmail.getCronDate(),batchEmail.getCronTime(),batchEmail.getEmailType().getName());
-            if (Utility.isValidCronExpression(cronExpression))
-            {
+            String cronExpression = Utility.buildCron(batchEmail.getCronDate(), batchEmail.getCronTime(), batchEmail.getEmailType().getName());
+            if (Utility.isValidCronExpression(cronExpression)) {
                 this.jobServices.deleteJob(oldCronName);
                 this.jobServices.scheduleJob(batchEmail.getEmailName(), cronExpression
                 );
-            }
-            else {
-                throw  new CronException("Fail in Schedule Job");
+            } else {
+                throw new CronException("Fail in Schedule Job");
             }
 
         } catch (SchedulerException e) {
             log.error("createEmailBatch -> SchedulerException {}", e.getMessage());
-            throw  new CronException("Fail in Schedule Job");
+            throw new CronException("Fail in Schedule Job");
         }
-        return  batchEmail;
+        return batchEmail;
     }
 }

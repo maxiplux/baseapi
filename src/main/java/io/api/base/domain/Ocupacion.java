@@ -13,17 +13,14 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "CONFIG_OCUPACION")
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class Ocupacion extends Catalog implements Serializable {
     @Id
-    @SequenceGenerator(name="ocupacion_seq",        sequenceName="ocupacion_seq",        allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,        generator="ocupacion_seq")
+    @SequenceGenerator(name = "ocupacion_seq", sequenceName = "ocupacion_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ocupacion_seq")
 
     @Column(name = "id", nullable = false)
     private Long id;
-
-
-
 
 
 }

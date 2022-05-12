@@ -55,5 +55,5 @@ public class BatchEmailDto {
     private String template;
 
 
-    private  List<EmailImagePathDto> imagesDto;
+    private List<EmailImagePathDto> imagesDto;
 }

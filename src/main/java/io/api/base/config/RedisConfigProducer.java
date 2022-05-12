@@ -23,7 +23,7 @@ public class RedisConfigProducer {
         template.setConnectionFactory(connectionFactory());
         template.setValueSerializer(new Jackson2JsonRedisSerializer<Ocupacion>(Ocupacion.class));
         return template;
-    };
+    }
 
 
 //    @Bean
@@ -35,7 +35,6 @@ public class RedisConfigProducer {
 //    };
 
 
-
 //    @Bean
 //    RedisMessageListenerContainer redisContainer() {
 //        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
@@ -45,7 +44,6 @@ public class RedisConfigProducer {
 //        container.setTaskExecutor(Executors.newFixedThreadPool(10));
 //        return container;
 //    }
-
 
 
 }

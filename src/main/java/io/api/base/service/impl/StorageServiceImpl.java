@@ -30,13 +30,11 @@ import java.util.stream.Stream;
 @Slf4j
 public class StorageServiceImpl implements StorageService {
 
-    private  Path rootLocation;
+    private Path rootLocation;
 
 
     @Value("${storage.location}")
     private String locationPath;
-
-
 
 
     @Override
@@ -60,15 +58,14 @@ public class StorageServiceImpl implements StorageService {
             if (filename.contains("..")) {
                 // This is a security check
                 throw new StorageException(
-                        "Cannot store file with relative path outside current directory "
-                                + filename);
+                    "Cannot store file with relative path outside current directory "
+                        + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, this.rootLocation.resolve(filename),
-                        StandardCopyOption.REPLACE_EXISTING);
+                    StandardCopyOption.REPLACE_EXISTING);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new StorageException("Failed to store file " + filename, e);
         }
 
@@ -79,10 +76,9 @@ public class StorageServiceImpl implements StorageService {
     public Stream<Path> loadAll() {
         try {
             return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    .map(this.rootLocation::relativize);
-        }
-        catch (IOException e) {
+                .filter(path -> !path.equals(this.rootLocation))
+                .map(this.rootLocation::relativize);
+        } catch (IOException e) {
             throw new StorageException("Failed to read stored files", e);
         }
 
@@ -108,12 +104,10 @@ public class StorageServiceImpl implements StorageService {
             log.info("saveImage Success");
             return Optional.of(this.rootLocation.resolve(filename).toFile().getAbsolutePath());
 
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             log.error("saveImage {}", e.getMessage());
         }
         return Optional.empty();
-
 
 
     }
@@ -132,12 +126,10 @@ public class StorageServiceImpl implements StorageService {
             log.info("saveFile Success");
             return Optional.of(this.rootLocation.resolve(filename).toFile().getAbsolutePath());
 
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             log.error("saveFile {}", e.getMessage());
         }
         return Optional.empty();
-
 
 
     }
@@ -150,12 +142,10 @@ public class StorageServiceImpl implements StorageService {
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
-            }
-            else {
+            } else {
                 throw new FileNotFoundException("Could not read file: " + filename);
             }
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             throw new FileNotFoundException("Could not read file: " + filename, e);
         }
     }

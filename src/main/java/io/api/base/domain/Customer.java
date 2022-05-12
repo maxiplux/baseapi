@@ -16,8 +16,8 @@ import javax.persistence.*;
 public class Customer {
 
     @Id
-    @SequenceGenerator(name="customer_seq",  sequenceName="customer_seq",       allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,        generator="customer_seq")
+    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
     private Long id;
     private String name;
     private String email;

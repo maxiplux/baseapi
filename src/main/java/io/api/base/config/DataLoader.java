@@ -6,6 +6,8 @@ import io.api.base.domain.Pais;
 import io.api.base.repository.DepartamentoRepository;
 import io.api.base.repository.MunicipioRepository;
 import io.api.base.repository.PaisRepository;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -14,9 +16,6 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
-
 @Component
 @Transactional
 public class DataLoader implements ApplicationRunner {
@@ -24,12 +23,8 @@ public class DataLoader implements ApplicationRunner {
     private EasyRandom factory;
 
 
-
-
-
     @Autowired
     private PaisRepository paisRepository;
-
 
 
     @Autowired
@@ -39,24 +34,30 @@ public class DataLoader implements ApplicationRunner {
     private MunicipioRepository municipioRepository;
 
 
-    private void main()
-    {
-        if (this.municipioRepository.count()==0)
-        {
-            Pais pais =  Pais.builder().id(1L).build();
-            pais.setActivo(true);
-            pais.setNombre("Colombia");
-            pais=this.paisRepository.save(pais);
+    private void main() {
 
-            Departamento departamento=Departamento.builder().pais(pais).build();
-            departamento.setNombre("Valle del cauca");
-            departamento.setActivo(true);
-            departamento=this.departamentoRepository.save(departamento);
-            Municipio municipio=Municipio.builder().departamento(departamento).build();
-            municipio.setNombre("Palmira");
+        this.municipioRepository.deleteAll();
+        this.departamentoRepository.deleteAll();
+        this.paisRepository.deleteAll();
+
+        Pais pais = Pais.builder().id(1L).build();
+        pais.setActivo(true);
+        pais.setNombre("Colombia");
+        pais = this.paisRepository.save(pais);
+
+        Departamento departamento = Departamento.builder().pais(pais).build();
+        departamento.setNombre("DPT" + 1);
+        departamento.setActivo(true);
+        departamento = this.departamentoRepository.save(departamento);
+
+        for (int i = 0; i < 1250; i++) {
+
+
+            Municipio municipio = Municipio.builder().departamento(departamento).build();
+            municipio.setNombre("MUNICIPIO" + i);
             this.municipioRepository.save(municipio);
-        }
 
+        }
 
 
     }
@@ -64,7 +65,7 @@ public class DataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         createFactory();
-       main();
+        main();
     }
 
 

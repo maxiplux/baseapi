@@ -21,16 +21,16 @@ public class BatchEmailController {
     @PostMapping(value = "/")
     public ResponseEntity<BatchEmail> create(@Valid @RequestBody BatchEmailDto batchEmailDto) {
         return new ResponseEntity<>(
-                batchEmailServices.createEmailBatch(batchEmailDto),
-                HttpStatus.OK);
+            batchEmailServices.createEmailBatch(batchEmailDto),
+            HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<BatchEmail> update(@PathVariable(value = "id") Long id,
-                                             @Valid @RequestBody BatchEmailDto batchEmailDto)  {
+                                             @Valid @RequestBody BatchEmailDto batchEmailDto) {
         return new ResponseEntity<>(
-                batchEmailServices.updateEmailBatch(id,batchEmailDto),
-                HttpStatus.OK);
+            batchEmailServices.updateEmailBatch(id, batchEmailDto),
+            HttpStatus.OK);
     }
 
 }

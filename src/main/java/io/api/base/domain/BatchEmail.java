@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
@@ -13,7 +12,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -30,8 +28,8 @@ import java.util.List;
 public class BatchEmail {
 
     @Id
-    @SequenceGenerator(name="batch_email_seq",  sequenceName="batch_email_seq",       allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,        generator="batch_email_seq")
+    @SequenceGenerator(name = "batch_email_seq", sequenceName = "batch_email_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "batch_email_seq")
     private Long id;
 
     @Column(unique = true, name = "email_name")

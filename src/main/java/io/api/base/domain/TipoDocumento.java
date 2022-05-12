@@ -13,19 +13,16 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "CONFIG_TIPO_DOCUMENTO")
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class TipoDocumento extends Catalog implements Serializable {
     @Id
-    @SequenceGenerator(name="tipo_documento_seq",
-        sequenceName="tipo_documento_seq",
-        allocationSize=1)
+    @SequenceGenerator(name = "tipo_documento_seq",
+        sequenceName = "tipo_documento_seq",
+        allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-        generator="tipo_documento_seq")
+        generator = "tipo_documento_seq")
     @Column(name = "id", nullable = false)
     private Long id;
-
-
-
 
 
 }

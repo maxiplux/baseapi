@@ -14,8 +14,6 @@ import javax.validation.constraints.NotBlank;
 public class EmailImagePathDto {
 
 
-
-
     @NotBlank
     private String name;
     @NotBlank

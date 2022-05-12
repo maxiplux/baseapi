@@ -28,6 +28,7 @@ public class RedisConfigConsumer {
         container.addMessageListener(listenerAdapter, new PatternTopic(topic().getTopic()));
         return container;
     }
+
     @Bean
     public MessageListenerAdapter listenerAdapter(OcupacionConsumer consumer) {
         MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(consumer);

@@ -22,10 +22,9 @@ public class RedisController {
     private OcupacionRepository ocupacionRepository;
 
 
-
     @GetMapping(value = "simple")
-    public String sendDataToRedisQueue( ) {
-        List<Ocupacion> ocupacionList= (List<Ocupacion>) ocupacionRepository.findAll();
+    public String sendDataToRedisQueue() {
+        List<Ocupacion> ocupacionList = (List<Ocupacion>) ocupacionRepository.findAll();
 
         sender.sendDataToRedisQueue(ocupacionList.get(0));
         return "successfully sent";

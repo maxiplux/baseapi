@@ -13,7 +13,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-
 @Data
 @EqualsAndHashCode
 @ToString
@@ -33,11 +32,11 @@ public abstract class Auditable<T> {
     protected Date lastModifiedDate;
 
     @CreatedBy
-    @Column(name="created_by")
+    @Column(name = "created_by")
     protected T createdBy;
 
     @LastModifiedBy
-    @Column(name="modified_by")
+    @Column(name = "modified_by")
     protected T modifiedBy;
 
 }

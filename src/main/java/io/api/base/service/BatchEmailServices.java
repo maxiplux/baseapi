@@ -7,5 +7,6 @@ import io.api.base.domain.entites.dto.BatchEmailDto;
 public interface BatchEmailServices {
 
     BatchEmail createEmailBatch(BatchEmailDto batchEmail);
-    BatchEmail updateEmailBatch(Long Id,BatchEmailDto batchEmail);
+
+    BatchEmail updateEmailBatch(Long Id, BatchEmailDto batchEmail);
 }

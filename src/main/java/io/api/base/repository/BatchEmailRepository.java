@@ -3,9 +3,9 @@ package io.api.base.repository;
 
 import io.api.base.domain.BatchEmail;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(collectionResourceRel = "batch-email", path = "batch-emails")
+@Repository
 public interface BatchEmailRepository extends PagingAndSortingRepository<BatchEmail, Long> {
 
 }

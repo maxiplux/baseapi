@@ -21,10 +21,10 @@ public class JobServicesImpl implements JobServices {
 
 
         return TriggerBuilder.newTrigger().forJob(jobDetail)
-                .withIdentity(jobDetail.getKey().getName(), jobDetail.getKey().getGroup())
-                //.startAt(DateBuilder.todayAt(0, 0, 0))
-                .withSchedule(CronScheduleBuilder.cronSchedule(cronScheduleExpression))
-                .build();
+            .withIdentity(jobDetail.getKey().getName(), jobDetail.getKey().getGroup())
+            //.startAt(DateBuilder.todayAt(0, 0, 0))
+            .withSchedule(CronScheduleBuilder.cronSchedule(cronScheduleExpression))
+            .build();
 
        /* return TriggerBuilder.newTrigger().forJob(jobDetail)
                 .withIdentity(jobDetail.getKey().getName(), jobDetail.getKey().getGroup())
@@ -36,20 +36,20 @@ public class JobServicesImpl implements JobServices {
     private JobDetail createEmailJobDetail(String identity) {
         log.info("Info new job {}", identity);
         return JobBuilder.newJob().ofType(EmailJob.class).storeDurably()
-                .withIdentity(JobKey.jobKey(identity))
-                .withDescription(identity)
-                .build();
+            .withIdentity(JobKey.jobKey(identity))
+            .withDescription(identity)
+            .build();
     }
 
     @Override
     public String scheduleJob(String name, String cronScheduleExpression) throws SchedulerException {
         JobDetail job = createEmailJobDetail(name);
-        log.info("scheduleJob new job {} {}", name,cronScheduleExpression);
+        log.info("scheduleJob new job {} {}", name, cronScheduleExpression);
         return scheduler.scheduleJob(job, trigger(job, cronScheduleExpression)).toString();
     }
 
     @Override
-    public boolean deleteJob(String name)  {
+    public boolean deleteJob(String name) {
 
         try {
             return scheduler.deleteJob(JobKey.jobKey(name));

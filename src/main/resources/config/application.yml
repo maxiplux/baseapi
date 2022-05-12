@@ -29,6 +29,10 @@ envers:
 
 spring:
 
+  data:
+    rest:
+      defaultMediaType: application/json
+
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}

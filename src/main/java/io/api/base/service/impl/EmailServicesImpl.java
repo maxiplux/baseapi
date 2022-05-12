@@ -22,14 +22,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class EmailServicesImpl implements EmailServices {
 
+    private final AtomicInteger count = new AtomicInteger();
     @Autowired
     private JavaMailSender javaMailSender;
-
     @Autowired
     private FreeMarkerConfigurer configuration;
-
-    private final AtomicInteger count = new AtomicInteger();
-
 
 
 //    @Override
@@ -65,14 +62,12 @@ public class EmailServicesImpl implements EmailServices {
             emailContent = getEmailContent();
             helper.setText(emailContent, true);
             javaMailSender.send(mimeMessage);
-        }
-        catch (MessagingException e) {
-            log.error("Exception sending message {}",e.getMessage());
-        }
-        catch (IOException e) {
-            log.error("IOException sending message {}",e.getMessage());
+        } catch (MessagingException e) {
+            log.error("Exception sending message {}", e.getMessage());
+        } catch (IOException e) {
+            log.error("IOException sending message {}", e.getMessage());
         } catch (TemplateException e) {
-            log.error("TemplateException sending message {}",e.getMessage());
+            log.error("TemplateException sending message {}", e.getMessage());
         }
 
 
@@ -83,9 +78,9 @@ public class EmailServicesImpl implements EmailServices {
         Map<String, Object> model = new HashMap<>();
         model.put("user", "Juan");
         String templateContent = FreeMarkerTemplateUtils
-                .processTemplateIntoString(configuration.getConfiguration()
-                                .getTemplate("welcome.ftlh"),
-                        model);
+            .processTemplateIntoString(configuration.getConfiguration()
+                    .getTemplate("welcome.ftlh"),
+                model);
 
 
         return templateContent;

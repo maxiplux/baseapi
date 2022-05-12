@@ -6,10 +6,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,27 +18,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import tech.jhipster.config.JHipsterProperties;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Component
 public class TokenProvider {
 
-    @Autowired
-    private   UserRepository userRepository;
-
-    private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
-
     private static final String AUTHORITIES_KEY = "auth";
-
     private static final String INVALID_JWT_TOKEN = "Invalid JWT token.";
-
+    private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
     private final Key key;
-
     private final JwtParser jwtParser;
-
     private final long tokenValidityInMilliseconds;
-
     private final long tokenValidityInMillisecondsForRememberMe;
-
     private final SecurityMetersService securityMetersService;
+    @Autowired
+    private UserRepository userRepository;
 
     public TokenProvider(JHipsterProperties jHipsterProperties, SecurityMetersService securityMetersService) {
         byte[] keyBytes;
@@ -53,7 +46,7 @@ public class TokenProvider {
         } else {
             log.warn(
                 "Warning: the JWT key used is not Base64-encoded. " +
-                "We recommend using the `jhipster.security.authentication.jwt.base64-secret` key for optimum security."
+                    "We recommend using the `jhipster.security.authentication.jwt.base64-secret` key for optimum security."
             );
             secret = jHipsterProperties.getSecurity().getAuthentication().getJwt().getSecret();
             keyBytes = secret.getBytes(StandardCharsets.UTF_8);
@@ -78,20 +71,19 @@ public class TokenProvider {
             validity = new Date(now + this.tokenValidityInMilliseconds);
         }
 
-        Optional<io.api.base.domain.User>  optionalUser= this.userRepository.findOneByLogin(authentication.getName());
-        Map<String,String> extraClaims=new HashMap<>();
-        if (optionalUser.isPresent())
-        {
-            extraClaims.put("firtsName",optionalUser.get().getFirstName());
-            extraClaims.put("lastName",optionalUser.get().getLastName());
-            extraClaims.put("email",optionalUser.get().getEmail());
+        Optional<io.api.base.domain.User> optionalUser = this.userRepository.findOneByLogin(authentication.getName());
+        Map<String, String> extraClaims = new HashMap<>();
+        if (optionalUser.isPresent()) {
+            extraClaims.put("firtsName", optionalUser.get().getFirstName());
+            extraClaims.put("lastName", optionalUser.get().getLastName());
+            extraClaims.put("email", optionalUser.get().getEmail());
         }
 
         return Jwts
             .builder()
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
-            .claim("extras",extraClaims)
+            .claim("extras", extraClaims)
             .signWith(key, SignatureAlgorithm.HS512)
             .setExpiration(validity)
             .compact();

@@ -12,14 +12,11 @@ import org.springframework.stereotype.Service;
 public class RedisSender {
 
 
-
-
     @Autowired
     private RedisTemplate<String, Ocupacion> redisTemplateEmail;
 
     @Autowired
     private ChannelTopic topic;
-
 
 
     public void sendDataToRedisQueue(Ocupacion input) {

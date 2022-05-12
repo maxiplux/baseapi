@@ -18,24 +18,21 @@ public class Utility {
 
     public static String buildCron(LocalDate cronDate, LocalTime cronTime, String frequency) {
 
-        switch (EmailTypeEnum.valueOf(frequency))
-        {
+        switch (EmailTypeEnum.valueOf(frequency)) {
             case DIARIO:
                 return MessageFormat.format("0 {0} {1} ? * * *", cronTime.getMinute(), cronTime.getHour());
             case MENSUAL:
                 return MessageFormat.format("0 {0} {1} {2} * ? *", cronTime.getMinute(), cronTime.getHour(), cronDate.getDayOfMonth());
             case UNICA_VEZ:
-                return MessageFormat.format("0 {0} {1} {2} {3} ? {4}", cronTime.getMinute(), cronTime.getHour(),cronDate.getDayOfMonth(),cronDate.getMonthValue(),""+cronDate.getYear());
+                return MessageFormat.format("0 {0} {1} {2} {3} ? {4}", cronTime.getMinute(), cronTime.getHour(), cronDate.getDayOfMonth(), cronDate.getMonthValue(), "" + cronDate.getYear());
 
         }
         throw new InvalidCronException("Invalid Cron definition");
 
 
-
     }
 
-    public static boolean isValidCronExpression(String cronExpression)
-    {
+    public static boolean isValidCronExpression(String cronExpression) {
 
         try {
 

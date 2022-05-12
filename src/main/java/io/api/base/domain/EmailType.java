@@ -16,11 +16,11 @@ import javax.persistence.*;
 public class EmailType {
 
     @Id
-    @SequenceGenerator(name="batch_email_type_seq",  sequenceName="batch_email_type_seq",       allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,        generator="batch_email_type_seq")
+    @SequenceGenerator(name = "batch_email_type_seq", sequenceName = "batch_email_type_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "batch_email_type_seq")
 
     private Long id;
-    @Column(unique=true)
+    @Column(unique = true)
 
     private String name;
 

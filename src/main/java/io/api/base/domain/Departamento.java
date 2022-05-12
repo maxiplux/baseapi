@@ -12,24 +12,21 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "CONFIG_DEPARTAMENTO")
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 public class Departamento extends Catalog implements Serializable {
     @Id
-    @SequenceGenerator(name="departamento_seq",
-        sequenceName="departamento_seq",
-        allocationSize=1)
+    @SequenceGenerator(name = "departamento_seq",
+        sequenceName = "departamento_seq",
+        allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-        generator="departamento_seq")
+        generator = "departamento_seq")
     @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "pais_id")
     private Pais pais;
-
-
-
 
 
 }

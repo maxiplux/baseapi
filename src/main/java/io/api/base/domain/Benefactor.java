@@ -1,6 +1,5 @@
 package io.api.base.domain;
 
-import io.api.base.domain.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -15,11 +14,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "CORE_BENEFACTOR")
-@EqualsAndHashCode(callSuper=false)
-public class Benefactor  extends Auditable<String>  implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class Benefactor extends Auditable<String> implements Serializable {
     @Id
-    @SequenceGenerator(name="benefactor_seq",  sequenceName="benefactor_seq",       allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,        generator="benefactor_seq")
+    @SequenceGenerator(name = "benefactor_seq", sequenceName = "benefactor_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "benefactor_seq")
 
     @Column(name = "id", nullable = false)
     private Long id;
@@ -76,12 +75,6 @@ public class Benefactor  extends Auditable<String>  implements Serializable {
 
     private Integer cantidadRecordatorios;
     private Boolean activo;
-
-
-
-
-
-
 
 
 }

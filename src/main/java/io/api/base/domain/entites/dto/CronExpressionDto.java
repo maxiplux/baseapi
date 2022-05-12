@@ -20,7 +20,6 @@ public class CronExpressionDto {
     private Integer year;
 
 
-
     @PositiveOrZero
     @Size(min = 1, max = 12, message = "Max Value number 12")
     @PositiveOrZero

@@ -1,6 +1,7 @@
 package io.api.base.web.rest.vm;
 
 import io.api.base.service.dto.AdminUserDTO;
+
 import javax.validation.constraints.Size;
 
 /**
