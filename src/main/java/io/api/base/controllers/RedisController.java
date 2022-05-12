@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.jhipster.config.JHipsterProperties;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1/redis")
+@RequestMapping("/data")
 public class RedisController {
 
     @Autowired
@@ -21,6 +23,8 @@ public class RedisController {
     @Autowired
     private OcupacionRepository ocupacionRepository;
 
+    @Autowired
+    private JHipsterProperties jHipsterProperties;
 
     @GetMapping(value = "simple")
     public String sendDataToRedisQueue() {
@@ -28,5 +32,14 @@ public class RedisController {
 
         sender.sendDataToRedisQueue(ocupacionList.get(0));
         return "successfully sent";
+    }
+
+    @GetMapping(value = "cors")
+    public List<String> getCors() {
+        List<String> stringList=new ArrayList<>();
+        jHipsterProperties.getCors().getAllowedOrigins().forEach(domain->{
+            stringList.add(domain);
+        });
+        return stringList;
     }
 }

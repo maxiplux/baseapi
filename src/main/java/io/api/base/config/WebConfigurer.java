@@ -46,7 +46,16 @@ public class WebConfigurer implements ServletContextInitializer {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = jHipsterProperties.getCors();
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
-            log.debug("Registering CORS filter, {}", config);
+            config.getAllowedOrigins().forEach( domain->{
+
+                log.info("Registering CORS filter, getAllowedOrigins {}", domain);
+            } );
+
+            config.getAllowedOriginPatterns().forEach( domain->{
+
+                log.info("Registering CORS filter getAllowedOriginPatterns, {}", domain);
+            } );
+
             source.registerCorsConfiguration("/api/**", config);
             source.registerCorsConfiguration("/management/**", config);
             source.registerCorsConfiguration("/v3/api-docs", config);
